@@ -1,5 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
-const token = "TOKEN"; // Add your bot token from @botfather for this to work
+const token = process.env['MY_SECRET']; // Add your bot token from @botfather for this to work
 
 const express = require("express");
 const app = express();
