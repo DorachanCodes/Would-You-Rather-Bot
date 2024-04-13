@@ -1,5 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
-const token = "7104044966:AAECyOy4ul6i8j0aktN5iIj5xjsdlbbMz3k"; // Add your bot token from @botfather for this to work
+const token = "TOKEN"; // Add your bot token from @botfather for this to work
 
 const express = require("express");
 const app = express();
@@ -14,18 +14,13 @@ app.listen(port, () => {
 });
 const bot = new TelegramBot(token, { polling: true });
 
-bot.on("message", (msg) => {
+bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
-  const txt = msg.text;
-  if (txt === "/start") {
-    const mms = "Bot Successfully Started. Now select any choice.";
-    bot.sendMessage(chatId, mms);
-    operation(chatId); // Pass chatId to the operation function
-  }
-});
-
-async function operation(chatId) {
-  const qNo = Math.floor(Math.random() * 600).toString();
+  const txt = msg.text.toString();
+  
+     
+  
+const qNo=random();
   const url = "https://wouldurather.io/api/question?id=" + qNo;
 
   try {
@@ -34,6 +29,7 @@ async function operation(chatId) {
 
     const res1 = ques.option1;
     const res2 = ques.option2;
+    
 
     bot.sendMessage(chatId, "\nWould You Rather", {
       reply_markup: {
@@ -57,9 +53,13 @@ async function operation(chatId) {
             ".\n" +
             data1 +
             " people voted with a percentage of " +
-            Math.floor(prcnt) +
-            "%",
+           
+     Math.floor(prcnt) +
+            "%"+
+            ".\n" +
+            "Send 0 for Next Question",
         );
+        
       } else if (choice === "2") {
         const data2 = parseInt(ques.option2Votes);
         prcnt = (data2 / (parseInt(ques.option1Votes) + data2)) * 100;
@@ -71,12 +71,21 @@ async function operation(chatId) {
             data2 +
             " people voted with a percentage of " +
             Math.floor(prcnt) +
-            "%",
+            "%"+
+            ".\n" +
+            "Send 0 for Next Question",
         );
+       
       }
-      operation(chatId);
+      
+
     });
   } catch (error) {
     console.error("Error fetching question:", error);
   }
+})
+function random()
+{
+    return Math.floor(Math.random() * 600).toString();
 }
+
