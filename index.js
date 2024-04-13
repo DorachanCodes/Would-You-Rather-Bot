@@ -16,8 +16,8 @@ const bot = new TelegramBot(token, { polling: true });
 
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
-  const txto = msg.text;
-  const txt=txto.toString();
+  const txt = msg.text;
+ 
      
   
 const qNo=random();
