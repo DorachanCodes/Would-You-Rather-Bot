@@ -23,7 +23,7 @@ bot.on("message", async (msg) => {
   
 const qNo=random();
   const url = "https://wouldurather.io/api/question?id=" + qNo;
-  if(txt==="/0"||txt=='/start')
+  if(txt==="/0"||txt==="/start"|| txt==="/0@wouldurather_bot"||txt==="/start@wouldurather_bot)
 
   try {
     const response = await fetch(url);
