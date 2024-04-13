@@ -23,7 +23,7 @@ bot.on("message", async (msg) => {
   
 const qNo=random();
   const url = "https://wouldurather.io/api/question?id=" + qNo;
-  if(txt==="/0"||txt=='/start'||txt=="/0@wouldurather_bot")
+  if(txt==="/0"||txt=='/start')
 
   try {
     const response = await fetch(url);
@@ -44,15 +44,18 @@ const qNo=random();
 
     bot.once("callback_query", (query) => {
       const choice = query.data;
-      let prcnt;
+      const player =query.from.first_name;
+     
+      
       if (choice === "1") {
 
         const data1 = parseInt(ques.option1Votes);
-        prcnt = (data1 / (data1 + parseInt(ques.option2Votes))) * 100;
-       
+        const prcnt = (data1 / (data1 + parseInt(ques.option2Votes))) * 100;
+       const stats=stat(prcnt);
+     
         bot.sendMessage(
-          chatId,
-          " You chose option "
+          chatId,stats+
+          "  You chose option "
           +
             choice +
             ".\n" +
@@ -61,17 +64,17 @@ const qNo=random();
            
      Math.floor(prcnt) +
             "%"+
-            ".\n" +
-            "Send /0 for Next Question",
+            ".\n" +"Played By : "+player+
+            "\nSend /0 for Next Question",
         );
         
       } else if (choice === "2") {
         const data2 = parseInt(ques.option2Votes);
-        prcnt = (data2 / (parseInt(ques.option1Votes) + data2)) * 100;
-        
+       const prcnt = (data2 / (parseInt(ques.option1Votes) + data2)) * 100;
+        const stats=stat(prcnt);
         
         bot.sendMessage(
-          chatId,
+          chatId,stats+
           "You chose option " +
             choice +
             ".\n" +
@@ -80,8 +83,8 @@ const qNo=random();
            
      Math.floor(prcnt) +
             "%"+
-            ".\n" +
-            "Send /0 for Next Question",
+            ".\n" +"Played By : "+player+
+            "\nSend /0 for Next Question",
         );
         
        
@@ -99,7 +102,7 @@ function random()
 }
 function stat(perc)
 {
-  if(prcent>50)
+  if(perc>50)
        return "Congrats !!  You are among the Majority";
       else
       return "OOPS !! Your are among Minority";
